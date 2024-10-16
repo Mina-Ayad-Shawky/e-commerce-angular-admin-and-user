@@ -1,0 +1,13 @@
+<div class="box mt-4">
+  <div class="my-2 col-md-3 col-sm-12">
+    <app-select [data]="allCategories" [title]="'Categories'" (selected)="getSpecificCategory($event)" ></app-select>
+  </div>
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-md-3 col-sm-12" *ngFor="let item of allData"  >
+     <app-product-item [item]="item" (selectedItem)="addtoCart($event)"></app-product-item>
+    </div>
+  </div>
+  <div class="text-center w-100" *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+</div>

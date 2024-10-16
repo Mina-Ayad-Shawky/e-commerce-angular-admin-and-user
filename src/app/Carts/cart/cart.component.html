@@ -1,0 +1,50 @@
+<div class="container my-5" *ngIf="!loading">
+  <h1 class="cart-title">Shopping Cart</h1>
+  <p class="cart-summary">You have <span style="color: red;">{{cartItems.length}}</span>  items in your cart</p>
+  <button class="btn btn-link text-danger float-right" (click)="clearCart()">Clear Shopping Cart</button>
+
+  <table class="table table-bordered mt-3">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Total</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of cartItems; let i=index" >
+        <td class="align-middle">
+          <img src="{{element.item.image}}" alt="" class="img-fluid" style="width: 50px; height: auto;">
+        </td>
+        <td class="align-middle">{{element.item.title}}</td>
+        <td class="align-middle">
+          <button class="btn btn-outline-secondary btn-sm" (click)="minus(i)">-</button>
+          <input type="text" class="form-control d-inline w-25 text-center" value="{{element.quantity}}" (change)="updateQuantity($event,i)">
+          <button class="btn btn-outline-secondary btn-sm" (click)="plus(i)">+</button>
+        </td>
+        <td class="align-middle">{{element.item.price}} L.E</td>
+        <td class="align-middle">{{element.item.price*element.quantity}} L.E</td>
+        <td class="align-middle">
+          <button class="btn btn-delete" (click)="onDelete(element)" >Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<div class="alert alert-danger" *ngIf="cartItems.length==0">
+  You Don't Have Any Items In Your Cart
+</div>
+  <div class="d-flex justify-content-between">
+    <span class="total-price">Total: {{totalPrice}}L.E</span>
+    <button class="btn btn-order" (click)="orderNow();wellDone=true">Order Now</button>
+  </div>
+
+  <div class="confirmation-message mt-4" *ngIf="wellDone">
+    Well done! Your order is successfully sent.
+  </div>
+</div>
+<div class="text-center w-100" *ngIf="loading">
+  <app-spinner></app-spinner>
+</div>
